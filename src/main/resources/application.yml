@@ -1,0 +1,19 @@
+spring:
+  kafka:
+    bootstrap-servers: soumen.servicebus.windows.net:9093
+    client-id: sign-microservice
+    properties:
+      sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="$ConnectionString" password="Endpoint=sb://soumen.servicebus.windows.net/;SharedAccessKeyName=sendAndReceive;SharedAccessKey=A5WCWOwz1N6rBFnmjhxiH4cDPdJ+68ITDLpLMkHpddw=";
+      sasl.mechanism: PLAIN
+      security.protocol: SASL_SSL
+    producer:
+      value-serializer: com.soumen.poc.signmicroservice.ProducerMessageSerializer
+    consumer:
+      group-id: $Default
+      properties:
+        spring.json:
+          use.type.headers: false
+          value.default.type: com.soumen.poc.signmicroservice.Payload
+topic:
+  sign: sign_eh
+  response: response_eh
