@@ -17,3 +17,7 @@ spring:
 topic:
   sign: sign_eh
   response: response_eh
+info:
+  app-name: Sign-Microservices
+  author: Soumen Karmakar
+  company: Ericsson Ltd.
