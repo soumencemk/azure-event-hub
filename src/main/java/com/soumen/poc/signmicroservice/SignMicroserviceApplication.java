@@ -1,16 +1,12 @@
 package com.soumen.poc.signmicroservice;
 
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
-
-import java.util.Map;
 
 @SpringBootApplication
 @RequiredArgsConstructor
@@ -24,12 +20,22 @@ public class SignMicroserviceApplication {
     }
 
     @GetMapping("/test-sign")
-    public Mono<ResponseEntity<Map>> testResponsePublish() {
+    public Mono<Response> testResponsePublish() {
         log.info("--- Initiating sample Sign request ---");
         Payload payload = Payload.builder().body("{\"Hello\":\"Good-bye\"}").txnId("txn_1").build();
         responseProducer.publishSign(payload);
-        return Mono.just(new ResponseEntity(Map.entry("status", "SUCCESS"), HttpStatus.OK));
+        return Mono.just(Response.builder().tag("status").desc("SUCCESS").build());
 
     }
 
+}
+
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+class Response {
+    private String tag;
+    private String desc;
 }
