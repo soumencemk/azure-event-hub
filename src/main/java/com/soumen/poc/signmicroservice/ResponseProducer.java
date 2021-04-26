@@ -1,6 +1,8 @@
 package com.soumen.poc.signmicroservice;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -23,10 +25,11 @@ public class ResponseProducer {
     private String SIGN_TOPIC_NAME;
 
 
+    @SneakyThrows
     public void produce(Payload payload) {
         this.kafkaTemplate.send(RESPONSE_TOPIC_NAME, payload);
         log.info("Published the message [{}] to the kafka topic: [{}]",
-                payload,
+                new ObjectMapper().writeValueAsString(payload),
                 RESPONSE_TOPIC_NAME
         );
     }
