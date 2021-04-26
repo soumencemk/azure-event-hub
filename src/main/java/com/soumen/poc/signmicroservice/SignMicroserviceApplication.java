@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
 
 import java.util.Map;
 
@@ -23,11 +24,11 @@ public class SignMicroserviceApplication {
     }
 
     @GetMapping("/test-sign")
-    public ResponseEntity<Map> testResponsePublish() {
+    public Mono<ResponseEntity<Map>> testResponsePublish() {
         log.info("--- Initiating sample Sign request ---");
         Payload payload = Payload.builder().body("{\"Hello\":\"Good-bye\"}").txnId("txn_1").build();
         responseProducer.publishSign(payload);
-        return new ResponseEntity(Map.entry("status", "SUCCESS"), HttpStatus.OK);
+        return Mono.just(new ResponseEntity(Map.entry("status", "SUCCESS"), HttpStatus.OK));
 
     }
 

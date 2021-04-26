@@ -21,3 +21,4 @@ info:
   app-name: Sign-Microservices
   author: Soumen Karmakar
   company: Ericsson Ltd.
+  server : Netty
