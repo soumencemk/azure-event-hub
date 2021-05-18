@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sign-microservice
+spec:
+  selector:
+    matchLabels:
+      octopusexport: OctopusExport
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        octopusexport: OctopusExport
+    spec:
+      containers:
+        - name: sign-ms
+          image: itssoumen/sign-microservice
